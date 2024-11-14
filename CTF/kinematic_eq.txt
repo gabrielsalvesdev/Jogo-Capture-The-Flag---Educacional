@@ -1,0 +1,5 @@
+x_f = x_i + v_i*t + 0.5*a*t*t
+d_x = 0.5 * (v_i + v_f) * t
+d_x = abs(x_f - x_i)
+
+

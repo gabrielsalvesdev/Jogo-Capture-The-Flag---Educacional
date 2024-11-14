@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Bandit.gd" type="Script" id=1]
+[ext_resource path="res://VisionManager.gd" type="Script" id=2]
+[ext_resource path="res://FaceTarget.gd" type="Script" id=3]
+[ext_resource path="res://CharacterMover.gd" type="Script" id=4]
+[ext_resource path="res://CharacterDetector.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0.0431373, 0.0431373, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.486275, 0.756863, 0, 1 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -90, 0, 0 ), Vector3( 2.50448e-06, -90, 90 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -90, 0, 0 ) ]
+}
+
+[sub_resource type="SphereShape" id=8]
+radius = 50.0
+
+[node name="Bandit" type="KinematicBody"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+team = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="VisionManager" type="Spatial" parent="."]
+script = ExtResource( 2 )
+
+[node name="Graphics" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Graphics"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Graphics/MeshInstance"]
+transform = Transform( 0.297808, 0, 0, 0, 0.524643, 9.9153e-09, 0, 9.91528e-09, 0.297808, 0, 0.998792, 0.623751 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics"]
+autoplay = "idle"
+anims/death = SubResource( 6 )
+anims/idle = SubResource( 7 )
+
+[node name="FaceTargetY" type="Spatial" parent="."]
+script = ExtResource( 3 )
+
+[node name="NPCCharacterMover" type="Spatial" parent="."]
+script = ExtResource( 4 )
+
+[node name="CharacterDetector" type="Area" parent="."]
+monitorable = false
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CharacterDetector"]
+shape = SubResource( 8 )

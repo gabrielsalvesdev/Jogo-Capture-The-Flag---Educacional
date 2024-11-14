@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/flag.glb" type="PackedScene" id=1]
+
+[sub_resource type="ConcavePolygonShape" id=1]
+
+[node name="Bandeira" instance=ExtResource( 1 )]
+transform = Transform( 5.39377, 0, -2.62816, 0, 6, 0, 2.62816, 0, 5.39377, 0, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="flag" index="0"]
+
+[node name="CollisionShape" type="CollisionShape" parent="flag/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 1 )
